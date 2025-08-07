@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Результат теста</title>
+    <style type="text/css">
+        @font-face {
+            font-family: 'DejaVu';
+            src: url(resource:/fonts/DejaVuSans.ttf);
+            -fs-pdf-font-embed: embed;
+            -fs-pdf-font-encoding: Identity-H;
+        }
+
+        body {
+            font-family: DejaVu, Arial Unicode MS, sans-serif;
+            font-size: 12pt;
+            color: #000000;
+        }
+
+        .percentage-high {
+            color: #009933 !important;
+            font-weight: bold;
+        }
+
+        .percentage-low {
+            color: #FF0000 !important;
+            font-weight: bold;
+        }
+
+        .correct {
+            color: #009933 !important;
+        }
+
+        .missed-correct {
+            color: #FF9900 !important;
+        }
+
+        .incorrect {
+            color: #FF0000 !important;
+        }
+
+        .unselected {
+            color: #555555 !important;
+        }
+
+        h1 {
+            color: #003366 !important;
+        }
+
+        h2 {
+            color: #0066CC !important;
+        }
+    </style>
+</head>
+<body>
+<h1>Результат теста: <span th:text="${test.title}">[Название теста]</span></h1>
+
+<p><strong>Пользователь:</strong> <span th:text="${username}">[Имя пользователя]</span></p>
+<p><strong>Дата прохождения:</strong> <span th:text="${#dates.format(passedAt, 'dd.MM.yyyy HH:mm')}">[Дата]</span></p>
+<p><strong>Ваш результат:</strong> <span th:text="${score + ' / ' + total}">[score / total]</span></p>
+<p><strong>Процент успешности:</strong>
+    <span th:class="${percentage >= 50.0} ? 'percentage-high' : 'percentage-low'"
+          th:text="${formattedPercentage}">
+        [percentage]
+    </span>
+</p>
+
+<div th:each="q : ${questions}">
+    <h2 th:text="'Вопрос: ' + ${q.questionText}">Вопрос</h2>
+    <ul>
+        <li th:each="o : ${q.options}"
+            th:class="${'option-item ' +
+                       (o.selected and o.correct ? 'correct' :
+                        o.selected and not o.correct ? 'incorrect' :
+                        not o.selected and o.correct ? 'missed-correct' : 'unselected')}"
+            th:text="${o.text}">
+        </li>
+    </ul>
+</div>
+</body>
+</html>
