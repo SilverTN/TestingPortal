@@ -10,16 +10,11 @@
    - Docker
    - Docker Compose
 
-2. Склонируйте репозиторий:
-   ```bash
-   git clone https://github.com/ваш-ник/TestingPortal.git
-   cd TestingPortal
-
-3. Соберите и запустите:
+2. Соберите и запустите:
    ```bash
    docker-compose up --build
    
-4. Откройте в браузере:
+3. Откройте в браузере:
    ```bash
    http://localhost:8080
    
